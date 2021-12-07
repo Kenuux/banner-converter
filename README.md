@@ -4,6 +4,7 @@
 final String mojangson = "{Base:15,Patterns:[{Color:12,Pattern:dls},{Color:0,Pattern:cre}]}";
 final Optional<BufferedImage> storedBannerOptional = BannerApi.getBannerImage(mojangson, 320, 160);
 ````
+
 All entries are expiring after 10 minutes.
 
 # Example images

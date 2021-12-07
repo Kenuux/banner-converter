@@ -1,4 +1,4 @@
-package me.kenox.bannerconverter;
+package de.kenox.bannerconverter;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -14,6 +14,6 @@ public class BannerColorDeserializer implements JsonDeserializer<BannerColor> {
 
     @Override
     public BannerColor deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        return BannerColor.getColorByInt(jsonElement.getAsInt());
+        return BannerColor.getColorByInt(jsonElement.getAsByte());
     }
 }

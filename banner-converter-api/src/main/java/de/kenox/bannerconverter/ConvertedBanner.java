@@ -1,9 +1,5 @@
-package me.kenox.bannerconverter;
+package de.kenox.bannerconverter;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
@@ -13,23 +9,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Kenox
  */
 @Data
-public class Banner {
+public class ConvertedBanner {
 
     public static final int TILE_COUNT_WIDTH = 5;
     public static final int TILE_COUNT_HEIGHT = 8;
 
-    private static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(Banner.class, new BannerInstanceCreator())
-            .registerTypeAdapter(BannerColor.class, new BannerColorDeserializer())
-            .registerTypeAdapter(BannerTileMetadata.class, new BannerTileMetadataDeserializer())
-            .create();
-
-    private final Map<String, BannerSprite> spriteRegistry = new HashMap<>();
+    private transient final Map<String, BannerSprite> spriteRegistry = new HashMap<>();
 
     @SerializedName("Base")
     private final BannerColor bannerColor;
@@ -93,28 +84,14 @@ public class Banner {
     }
 
     public String toMojangson() {
-        final JsonObject baseObject = new JsonObject();
-
-        // Add base color
-        baseObject.addProperty("Base", this.bannerColor.getColor());
-
-        // Add patterns
-        final JsonArray jsonArray = new JsonArray();
-
-        for (final BannerPattern bannerPattern : this.bannerPatterns) {
-            final JsonObject patternObject = new JsonObject();
-            patternObject.addProperty("Color", bannerPattern.getBannerColor().getColor());
-            patternObject.addProperty("Pattern", bannerPattern.getBannerTileMetadata().getPattern());
-
-            jsonArray.add(patternObject);
-        }
-
-        baseObject.add("Patterns", jsonArray);
-
-        return GSON.toJson(baseObject).replace("\"", "");
+        return BannerUtil.toMojangson(
+                this.bannerColor.getColor(),
+                this.bannerPatterns.stream().map(bannerPattern -> bannerPattern.getBannerColor().getColor()).collect(Collectors.toList()),
+                this.bannerPatterns.stream().map(bannerPattern -> bannerPattern.getBannerTileMetadata().getPattern()).collect(Collectors.toList())
+        );
     }
 
-    public static Banner fromMojangson(final String mojangson) {
-        return GSON.fromJson(mojangson, Banner.class);
+    public static ConvertedBanner fromJson(final String mojangson) {
+        return BannerUtil.GSON.fromJson(mojangson, ConvertedBanner.class);
     }
 }

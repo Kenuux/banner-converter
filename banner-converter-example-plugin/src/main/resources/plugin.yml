@@ -1,0 +1,8 @@
+name: ExampleBannerPlugin
+author: Kenox
+version: 1.0.0
+
+main: de.kenox.bannerconverter.example.ExamplePlugin
+
+commands:
+  banner:

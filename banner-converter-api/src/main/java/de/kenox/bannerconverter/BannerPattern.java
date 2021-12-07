@@ -1,4 +1,4 @@
-package me.kenox.bannerconverter;
+package de.kenox.bannerconverter;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

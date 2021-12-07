@@ -1,4 +1,4 @@
-package me.kenox.bannerconverter;
+package de.kenox.bannerconverter;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -66,9 +66,12 @@ public enum BannerTileMetadata {
     TRIANGLE_BOTTOM_LEFT("lud", 320, 2240),
     TRIANGLE_BOTTOM_RIGHT("rd", 480, 2240);
 
-    @Getter private final String pattern;
-    @Getter private final int tileX;
-    @Getter private final int tileY;
+    @Getter
+    private final String pattern;
+    @Getter
+    private final int tileX;
+    @Getter
+    private final int tileY;
 
     public static BannerTileMetadata getTileMetadataByPattern(final String pattern) {
         return Arrays.stream(values())
