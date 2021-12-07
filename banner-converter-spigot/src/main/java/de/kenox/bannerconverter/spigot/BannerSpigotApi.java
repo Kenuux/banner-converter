@@ -63,20 +63,22 @@ public class BannerSpigotApi {
             final Class<?> compoundClass = Class.forName(nbtPackageChanged ? "net.minecraft.nbt.NBTTagCompound" : "net.minecraft.server." + VERSION + ".NBTTagCompound");
             final Class<?> mojangsonParserClass = Class.forName(nbtPackageChanged ? "net.minecraft.nbt.MojangsonParser" : "net.minecraft.server." + VERSION + ".MojangsonParser");
             final Method parseMethod = mojangsonParserClass.getMethod("parse", String.class);
+
             Object nbtTagCompound = parseMethod.invoke(mojangsonParserClass, mojangson);
             if (nbtTagCompound == null) {
                 nbtTagCompound = compoundClass.newInstance();
             }
 
-            final Class<?> craftItemStack = Class
+            final Class<?> craftItemStackClass = Class
                     .forName("org.bukkit.craftbukkit." + VERSION + ".inventory.CraftItemStack");
-            final Method asNMSCopy = craftItemStack.getMethod("asNMSCopy", ItemStack.class);
-            final Object nmsItemStack = asNMSCopy.invoke(asNMSCopy, item);
+            final Method asNMSCopyMethod = craftItemStackClass.getMethod("asNMSCopy", ItemStack.class);
+            final Object nmsItemStack = asNMSCopyMethod.invoke(asNMSCopyMethod, item);
 
-            final Method setTag = nmsItemStackClass.getMethod("setTag", compoundClass);
-            setTag.invoke(nmsItemStack, nbtTagCompound);
-            final Method asBukkitCopy = craftItemStack.getMethod("asBukkitCopy", nmsItemStackClass);
-            return (ItemStack) asBukkitCopy.invoke(asBukkitCopy, nmsItemStack);
+            final Method setTagMethod = nmsItemStackClass.getMethod("setTag", compoundClass);
+            setTagMethod.invoke(nmsItemStack, nbtTagCompound);
+
+            final Method asBukkitCopyMethod = craftItemStackClass.getMethod("asBukkitCopy", nmsItemStackClass);
+            return (ItemStack) asBukkitCopyMethod.invoke(asBukkitCopyMethod, nmsItemStack);
         } catch (final Exception var5) {
             var5.printStackTrace();
             return item;
