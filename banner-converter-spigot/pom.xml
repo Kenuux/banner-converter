@@ -16,14 +16,6 @@
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>kenox-repo</id>
-            <name>Reposilite Repository</name>
-            <url>http://45.85.218.135:8561/releases</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>io.papermc.paper</groupId>

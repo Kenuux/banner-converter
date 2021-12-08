@@ -27,6 +27,13 @@
         <module>banner-converter-example-plugin</module>
     </modules>
 
+    <repositories>
+        <repository>
+            <id>kenox-repo</id>
+            <url>http://45.85.218.135:8561/releases</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -45,5 +52,12 @@
             <version>31.0.1-jre</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>kenox-repo</id>
+            <url>http://45.85.218.135:8561/releases</url>
+        </repository>
+    </distributionManagement>
 
 </project>
